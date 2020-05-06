@@ -4,7 +4,6 @@
 </template>
 
 <script>
-import Notification from "@/components/notification"
 
 export default {
     name: "Home",
@@ -12,8 +11,8 @@ export default {
     },
     mounted() {
         console.log('start render notification.')
-        Notification('测试消息通知')
-        Notification({
+        this.$notice('测试消息通知')
+        this.$notice({
             content: '测试消息通知2',
             duration: 1000
         })

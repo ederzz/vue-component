@@ -35,6 +35,8 @@ function Notify(opts) {
     instance.add(options)
 }
 
-Vue.prototype.$notice = Notify
+Notify.install = () => {
+    Vue.prototype.$notice = Notify
+}
 
 export default Notify

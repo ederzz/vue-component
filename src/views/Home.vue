@@ -1,18 +1,22 @@
-<template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+<template lang="pug">
+    .home
+        notification
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Notification from "@/components/notification"
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
-};
+    name: "Home",
+    components: {
+    },
+    mounted() {
+        console.log('start render notification.')
+        Notification('测试消息通知')
+        Notification({
+            content: '测试消息通知2',
+            duration: 1000
+        })
+    }
+}
 </script>

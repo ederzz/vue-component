@@ -10,6 +10,7 @@
 <script>
 import Notice from './Notice.vue'
 
+// TODO: transition 添加过渡动画
 const now = Date.now
 let seed = 0
 const getUUid = () => `notice_${ now }_${ seed++ }`

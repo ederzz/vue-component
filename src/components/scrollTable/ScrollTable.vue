@@ -45,11 +45,11 @@
                 }
             },
             tableStyle() {
-                return { height: rowNum * lineHeight + 'px' }
+                return { height: this.rowNum * this.lineHeight + 'px' }
             },
-            rowStyle() {
+            // rowStyle() {
                 
-            }
+            // }
         },
         data() {
             return {

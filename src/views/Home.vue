@@ -2,6 +2,7 @@
     .home
         notification
         scroll-table(:widths="widths" :data="tableData" :columns="columns")
+        num-chart(:digit="8" :num="num")
 </template>
 
 <script>
@@ -73,7 +74,8 @@ export default {
                 {
                     key: 'key3'
                 },
-            ]
+            ],
+            num: 45678
         }
     },
     mounted() {
@@ -83,6 +85,9 @@ export default {
             content: '测试消息通知2',
             duration: 1000
         })
+        setInterval(() => {
+            this.num += 2435
+        }, 2000)
     }
 }
 </script>

@@ -1,9 +1,9 @@
 <template lang="pug">
     .home
         bmap-fence
-        notification
-        scroll-table(:widths="widths" :data="tableData" :columns="columns")
-        num-chart(:digit="8" :num="num")
+        //- notification
+        //- scroll-table(:widths="widths" :data="tableData" :columns="columns")
+        //- num-chart(:digit="8" :num="num")
 </template>
 
 <script>

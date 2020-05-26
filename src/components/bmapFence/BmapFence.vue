@@ -9,6 +9,9 @@
         //- 绘制circle的画布
         .circle-canvas(
             v-show="showCircleCanvas"
+            @mousedown="startCirclePaint"
+            @mousemove="moveCirclePaint"
+            @mouseup="endCirClePaint"
         )
         baidu-map(
             class="map"
@@ -18,15 +21,36 @@
             @click="paint"
             @dblclick="endPaint"
             @mousemove="fillLastPoint"
+            @ready="initMap"
         )
-            bm-polygon(
+            .fence(
                 v-for="item in fences"
-                :path="item.vertices" 
-                stroke-color="blue" 
-                :stroke-opacity="0.5" 
-                :stroke-weight="2" 
-                :editing="true" 
-            ) 
+            )
+                template(v-if="item.type === 'polygon'")
+                    bm-polygon(
+                        :path="item.vertices" 
+                        stroke-color="blue" 
+                        :stroke-opacity="0.5" 
+                        :stroke-weight="2" 
+                        :editing="true" 
+                    ) 
+                template(v-if="item.type === 'line'")
+                    bm-polyline(
+                        :path="item.vertices" 
+                        stroke-color="blue" 
+                        :stroke-opacity="0.5" 
+                        :stroke-weight="2" 
+                        :editing="true" 
+                    ) 
+                template(v-if="item.type === 'circle'")
+                    bm-circle(
+                        :center="item.center" 
+                        :radius="item.radius" 
+                        stroke-color="blue" 
+                        :stroke-opacity="0.5" 
+                        :stroke-weight="2" 
+                        :editing="true"
+                    ) 
         //- 使用mask
 </template>
 
@@ -37,7 +61,7 @@
 
     export default {
         props: {
-            // TODO: 可编辑
+            // TODO: 可编辑，样式，绘制时不准确
             center: {
                 type: Object,
                 default() {
@@ -74,7 +98,9 @@
             return {
                 fenceType: '',
                 fences: [],
-                isEndPaint: false
+                isEndPaint: false,
+                map: null,
+                isMouseDown: false
             }
         },
         computed: {
@@ -86,6 +112,10 @@
             }
         },
         methods: {
+            initMap(evt) {
+                this.map = evt.map
+                this.$emit('ready', evt)
+            },
             switchFenceType(t) {
                 if (t !== this.fenceType) {
                     this.fenceType = t
@@ -136,8 +166,25 @@
                     this.$set(vertices, vertices.length - 1, point)
                 }
             },
-            // 绘制圆形围栏 TODO:
-
+            // 绘制圆形围栏
+            startCirclePaint({ offsetX, offsetY }) {
+                const point = this.map.pixelToPoint({ x: offsetX, y: offsetY })
+                this.fences.push({
+                    type: 'circle',
+                    center: point
+                })
+                this.isMouseDown = true
+            },
+            moveCirclePaint({ offsetX, offsetY }) {
+                if (!this.isMouseDown) return
+                const point = this.map.pixelToPoint({ x: offsetX, y: offsetY })
+                const fence = this.fences[ this.fences.length - 1 ]
+                const radius = this.map.getDistance(point, fence.center)
+                this.$set(fence, 'radius', radius)
+            },
+            endCirClePaint() {
+                this.isMouseDown = false
+            }
         }
     }
 </script>
@@ -155,6 +202,7 @@
             right: 0;
             bottom: 0;
             border: 1px solid red;
+            z-index: 90;
         }
 
         .fence-types {

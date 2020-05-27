@@ -61,7 +61,7 @@
 
     export default {
         props: {
-            // TODO: 可编辑，样式，绘制时不准确
+            // TODO: 可编辑，样式，绘制时不准确，是否可删除
             center: {
                 type: Object,
                 default() {

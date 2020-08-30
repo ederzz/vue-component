@@ -3,6 +3,8 @@
         notification
         scroll-table(:widths="widths" :data="tableData" :columns="columns")
         num-chart(:digit="8" :num="num")
+        steps(:config="stepsConfig" :active="stepsActiveIdx")
+        button(@click="nextStep") 下一步
 </template>
 
 <script>
@@ -75,7 +77,22 @@ export default {
                     key: 'key3'
                 },
             ],
-            num: 45678
+            num: 45678,
+            stepsConfig: [
+                {
+                    title: '步骤1'
+                },
+                {
+                    title: '步骤2'
+                },
+                {
+                    title: '步骤3'
+                },
+                {
+                    title: '步骤4'
+                },
+            ],
+            stepsActiveIdx: 0
         }
     },
     mounted() {
@@ -88,6 +105,12 @@ export default {
         setInterval(() => {
             this.num += 2435
         }, 2000)
+    },
+    methods: {
+        nextStep() {
+            if (this.stepsActiveIdx++ > 3) this.stepsActiveIdx = 0
+            
+        }
     }
 }
 </script>

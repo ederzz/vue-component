@@ -5,13 +5,19 @@ import store from "./store";
 import notification from '@/components/notification'
 import scrollTable from '@/components/scrollTable'
 import numChart from '@/components/numChart'
-import steps from '@/components/steps'
+import BmapFence from '@/components/bmapFence'
+import BmapHeatMap from '@/components/bmapHeatMap'
+import BaiduMap from 'vue-baidu-map'
 
 Vue.config.productionTip = false;
 Vue.use(notification)
 Vue.use(scrollTable)
 Vue.use(numChart)
-Vue.use(steps)
+Vue.use(BmapFence)
+Vue.use(BmapHeatMap)
+Vue.use(BaiduMap, {
+    ak: '4CDam0ZzadenEkVMdgUxiVnZqs0fPL0w'
+})
 
 new Vue({
   router,

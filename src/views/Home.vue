@@ -5,6 +5,11 @@
         num-chart(:digit="8" :num="num")
         steps(:config="stepsConfig" :active="stepsActiveIdx")
         button(@click="nextStep") 下一步
+        bmap-heatmap
+        //- bmap-fence
+        //- notification
+        //- scroll-table(:widths="widths" :data="tableData" :columns="columns")
+        //- num-chart(:digit="8" :num="num")
 </template>
 
 <script>
